@@ -1,9 +1,12 @@
 #ifndef MISC_H
 #define MISC_H
 
-int WINDOW_HEIGHT = 600;
-int WINDOW_WIDTH = 800;
-int FONT_SIZE = 14;
+extern int WINDOW_HEIGHT;
+extern int WINDOW_WIDTH;
+extern int FONT_SIZE;
+extern int FONT_SIZE_HEAD ;
+extern char* WIN_TITLE;
+
 
 #endif //MISC_H
 

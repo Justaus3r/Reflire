@@ -1,15 +1,16 @@
-#ifndef VEWS_H
+#ifndef VIEWS_H
 #define VIEWS_H
 
 #include <iostream>
 #include "raylib.h"
-#define RAYGUI_IMPLEMENTATION
-#include "raygui.h"
+#define INCLUDE_WIN_DATA 
 #include "misc.h"
+
 
 class View{
     protected:
-        int init_x, init_y;
+        int init_x, init_y, title_x, title_y;
+        char* title;
         virtual void render() = 0;
 };
 
@@ -41,6 +42,9 @@ class Login: public View{
 
         char signup_textbox[128] = {0};
         char signin_textbox[128] = {0};
+    public:
+        void render() override;
+        
 };
 
 
