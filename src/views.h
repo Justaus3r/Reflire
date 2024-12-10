@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include "raylib.h"
-#define INCLUDE_WIN_DATA 
 #include "misc.h"
 
 
@@ -12,18 +11,20 @@ class View{
         int init_x, init_y, title_x, title_y;
         char* title;
         virtual void render() = 0;
+        virtual void registerController() = 0;
 };
 
 class Login: public View{
     private:
-        char* signup_text = "Signup";
-        char* signin_text = "Signin";
-        int signup_button_x = WINDOW_WIDTH / 2 - (MeasureText(signup_text, FONT_SIZE) + 3); 
+        bool signup_button_active = true, signin_button_active = false;
+        const char* signup_text = "Signup";
+        const char* signin_text = "Signin";
+        int signup_button_x = WINDOW_WIDTH / 2 - (MeasureText(signup_text, FONT_SIZE) + 20); 
         int signup_button_y = WINDOW_HEIGHT / 2 - (WINDOW_HEIGHT / 4);
         int signin_button_x = WINDOW_WIDTH / 2 + ( 2 );
         int signin_button_y = signup_button_y;
         int input_size = 128;
-        bool editable = true;
+        bool input_editable = true;
         char* username_text = "Username";
         char* password_text = "Password";
         char* reenter_pass_text = "Re-enter Password";
@@ -42,8 +43,11 @@ class Login: public View{
 
         char signup_textbox[128] = {0};
         char signin_textbox[128] = {0};
+        Rectangle login_page_rect = {WINDOW_WIDTH * 0.25, WINDOW_HEIGHT * 0.25, WINDOW_WIDTH * 0.50, WINDOW_HEIGHT * 0.50};
     public:
         void render() override;
+        void registerController() override;
+        void validate_button_states(bool signup_new, bool signin_new);
         
 };
 
