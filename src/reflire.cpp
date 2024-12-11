@@ -1,19 +1,20 @@
-#include "reflire.h"
-
 #include "views.h"
-
+#include "reflire.h"
+#include "misc.h"
+#include "raygui.h"
+#include <iostream>
 
 ReFlire::ReFlire(){
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, WIN_TITLE);
+    GuiSetStyle(DEFAULT, TEXT_SIZE, FONT_SIZE);  
 }
 
 void ReFlire::startEventLoop(){
     Login login_view;
-
-     Image background = LoadImage("..\\res\\airline-travel-bg.png");
-     ImageResize(&background, WINDOW_WIDTH, WINDOW_HEIGHT);
-     Texture2D bg_texture = LoadTextureFromImage(background);
-     UnloadImage(background);
+    Image background = LoadImage("../res/airline-travel-bg.png");
+    ImageResize(&background, WINDOW_WIDTH, WINDOW_HEIGHT);
+    Texture2D bg_texture = LoadTextureFromImage(background);
+    UnloadImage(background);
      
      SetTargetFPS(60);
     while (!WindowShouldClose()) {
@@ -21,7 +22,7 @@ void ReFlire::startEventLoop(){
         ClearBackground(RAYWHITE);
         DrawTexture(bg_texture, 0, 0, WHITE); 
         if (background.data == NULL) {
-            DrawText("ASD", 0, 0, 18, BLACK);
+            std::cout<<"WARNING: Failed to load background image.";
         } 
         login_view.render();
 
