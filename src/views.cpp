@@ -59,13 +59,34 @@ void Login::render(){
         DrawText((const char*)password_text, (WINDOW_WIDTH*0.25 + 5), signup_textbox_password_y, FONT_SIZE, BLACK);
 
         bool password_box_active = GuiTextBox((Rectangle){signup_textbox_password_x, signup_textbox_password_y, textbox_size, 20}, signup_textbox_password, input_size, password_textbox_active);
-    
+
         validate_internal_states(false, false, username_box_active, password_box_active, TEXTBOX_STATUS);
 
+        DrawText("Note: ", (WINDOW_WIDTH*0.25 + 5), (WINDOW_HEIGHT * 0.50) , 14, BLACK);
+    
+        DrawText(note1, (WINDOW_WIDTH*0.25 + 5), (WINDOW_HEIGHT * 0.53) , 14, BLACK);
+        DrawText(note2, (WINDOW_WIDTH*0.25 + 5), (WINDOW_HEIGHT * 0.60) , 14, BLACK);
+        DrawText(note3, (WINDOW_WIDTH*0.25 + 5), (WINDOW_HEIGHT * 0.65) , 14, BLACK);
+
+    bool do_signup_button_status = GuiButton((Rectangle){(WINDOW_WIDTH * 0.55), (WINDOW_HEIGHT * 0.70), MeasureText("Create Account", FONT_SIZE) + 20, 20}, "Create Account"); 
+
     }
+    
 
     else if (signin_button_active) {
-        GuiTextBox((Rectangle){signin_textbox_username_x, signin_textbox_username_y, textbox_size, 20}, signin_textbox_username, input_size, input_editable);
+        DrawText(signin_text, (signin_button_x - MeasureText(signin_text, FONT_SIZE) / 2), signin_button_y + 30, FONT_SIZE, BLACK);
+
+        DrawText((const char*)username_text, (WINDOW_WIDTH*0.25 + 5), signin_textbox_username_y, FONT_SIZE, BLACK);
+
+        bool username_box_active = GuiTextBox((Rectangle){signin_textbox_username_x, signin_textbox_username_y, textbox_size, 20}, signin_textbox_username, input_size, username_textbox_active);
+
+        DrawText((const char*)password_text, (WINDOW_WIDTH*0.25 + 5), signin_textbox_password_y, FONT_SIZE, BLACK);
+
+        bool password_box_active = GuiTextBox((Rectangle){signin_textbox_password_x, signin_textbox_password_y, textbox_size, 20}, signin_textbox_password, input_size, password_textbox_active);
+
+        validate_internal_states(false, false, username_box_active, password_box_active, TEXTBOX_STATUS);
+
+    bool do_signin_button_status = GuiButton((Rectangle){(WINDOW_WIDTH * 0.60), (WINDOW_HEIGHT * 0.60), MeasureText("  Login  ", FONT_SIZE) + 20, 20}, "Login"); 
     }
 }
 
