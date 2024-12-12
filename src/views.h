@@ -4,15 +4,19 @@
 #include <iostream>
 #include "raylib.h"
 #include "misc.h"
+#include "controller.h"
 
 
 class View{
     protected:
         int init_x, init_y, title_x, title_y;
         char* title;
+        void (*view_controller)(Context& ctx);
         virtual void render() = 0;
-        virtual void registerController() = 0;
+        virtual void registerController(void(*view_controller)(Context& ctx)) = 0;
+        void executeController(Context& ctx);
 };
+
 
 class Login: public View{
     private:
@@ -52,7 +56,7 @@ class Login: public View{
         char* note3 = "3: We may share telementry data with out partners";
     public:
         void render() override;
-        void registerController() override;
+        void registerController(void(*view_controller)(Context& ctx)) override;
         void validate_internal_states(bool signup_new, bool signin_new, bool username_box_new, bool password_box_new, const int state);
         
 };

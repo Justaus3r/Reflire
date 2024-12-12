@@ -6,6 +6,13 @@
 const int LOGIN_BUTTONS_STATUS =  1;
 const int TEXTBOX_STATUS  = 2;
 
+Context ctx;
+
+void View::executeController(Context& controller_ctx){
+    this->view_controller(controller_ctx);
+}
+
+
 void Login::validate_internal_states(bool signup_new, bool signin_new, bool username_editable, bool password_editable, const int internal_state){
     switch(internal_state){
         case(LOGIN_BUTTONS_STATUS): {
@@ -34,10 +41,11 @@ void Login::validate_internal_states(bool signup_new, bool signin_new, bool user
 }
 
 void Login::render(){
-
+    
     this->title = "Reflire Airline Reservation System";
     this->title_x = WINDOW_WIDTH / 2 -  (MeasureText(this->title, FONT_SIZE_HEAD) / 2);
-    this->title_y = WINDOW_HEIGHT * 0.10; //10% of total window height
+    this->title_y = WINDOW_HEIGHT * 0.10; //10% of total window height 
+    
     DrawText((const char*)title, title_x, title_y, FONT_SIZE_HEAD, BLACK);
     
     DrawRectangleRec(login_page_rect, SKYBLUE); 
@@ -68,8 +76,18 @@ void Login::render(){
         DrawText(note2, (WINDOW_WIDTH*0.25 + 5), (WINDOW_HEIGHT * 0.60) , 14, BLACK);
         DrawText(note3, (WINDOW_WIDTH*0.25 + 5), (WINDOW_HEIGHT * 0.65) , 14, BLACK);
 
-    bool do_signup_button_status = GuiButton((Rectangle){(WINDOW_WIDTH * 0.55), (WINDOW_HEIGHT * 0.70), MeasureText("Create Account", FONT_SIZE) + 20, 20}, "Create Account"); 
+        bool do_signup_button_status = GuiButton((Rectangle){(WINDOW_WIDTH * 0.55), (WINDOW_HEIGHT * 0.70), MeasureText("Create Account", FONT_SIZE) + 20, 20}, "Create Account"); 
+        
+        ctx.is_doing_signup = true;
+        ctx.username = signup_textbox_username;
+        ctx.password = signup_textbox_password;
+        
+        bool any_error = ctx.show_error_passlen || ctx.show_error_nospecialchar;
 
+        if(do_signup_button_status || any_error){
+            this->executeController(ctx);
+        }
+    
     }
     
 
@@ -87,10 +105,15 @@ void Login::render(){
         validate_internal_states(false, false, username_box_active, password_box_active, TEXTBOX_STATUS);
 
     bool do_signin_button_status = GuiButton((Rectangle){(WINDOW_WIDTH * 0.60), (WINDOW_HEIGHT * 0.60), MeasureText("  Login  ", FONT_SIZE) + 20, 20}, "Login"); 
+    
+    if(do_signin_button_status){     
+        this->executeController(ctx);
+    }
+
     }
 }
 
 
-void Login::registerController(){
-
+void Login::registerController(void(*view_controller)(Context& ctx)){
+    this->view_controller = view_controller;
 }
