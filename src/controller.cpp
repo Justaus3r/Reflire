@@ -21,7 +21,7 @@ void login_view_controller(Context& ctx){
     }
 
     if(ctx.show_error_passlen){
-        int result = GuiMessageBox((Rectangle){ 85, 70, 650, 200 },
+        int result = GuiMessageBox((Rectangle){ 85, 70, 550, 200 },
                     "#191#ERROR", "PIN Number must be atleast 8-digits", "Return");
         if(result >= 0) ctx.show_error_passlen = false;
         return;
@@ -40,7 +40,7 @@ void login_view_controller(Context& ctx){
     }
 
     if(ctx.show_error_nospecialchar){
-     int result = GuiMessageBox((Rectangle){ 85, 70, 250, 100 },
+     int result = GuiMessageBox((Rectangle){ 85, 70, 550, 200 },
                     "#191#ERROR", "PIN Number must have a alteast 1 special character", "Return");
      if(result >= 0) ctx.show_error_nospecialchar = false;
     }
