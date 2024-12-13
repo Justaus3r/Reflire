@@ -11,11 +11,19 @@ class View{
     protected:
         int init_x, init_y, title_x, title_y;
         char* title;
+        bool current_view_complete = false;
         void (*view_controller)(Context& ctx);
-        virtual void render() = 0;
-        virtual void registerController(void(*view_controller)(Context& ctx)) = 0;
         void executeController(Context& ctx);
+    public:
+        View* next_view;
+        virtual void registerController(void(*view_controller)(Context& ctx)){};
+        virtual View* render(){};
+
+    // both render() and registerController() were initially pure virtual functions
+    // but then we can't instantiate the object using the superclass View
+    // so now they are normal virtual methods
 };
+
 
 
 class Login: public View{
@@ -51,15 +59,23 @@ class Login: public View{
         char signin_textbox_password[128] = {0};
 
         Rectangle login_page_rect = {WINDOW_WIDTH * 0.25, WINDOW_HEIGHT * 0.25, WINDOW_WIDTH * 0.50, WINDOW_HEIGHT * 0.50};
-        char* note1 = "1: Your Password must be atleast 8-letters long and\n must contain special characters";
+        char* note1 = "1: Your PIN Number must be atleast 8-letters long and\n must contain atleast 1 special character";
         char* note2 = "2: By Signingup, you agree to our terms and policies";
         char* note3 = "3: We may share telementry data with out partners";
     public:
-        void render() override;
-        void registerController(void(*view_controller)(Context& ctx)) override;
+        Login(){};
+        View* render();
+        void registerController(void(*view_controller)(Context& ctx));
         void validate_internal_states(bool signup_new, bool signin_new, bool username_box_new, bool password_box_new, const int state);
         
 };
 
+
+class Dashboard: public View{
+    public:
+        Dashboard(){};
+        View* render();
+        void registerController(void(*view_controller)(Context& ctx));
+};
 
 #endif //VIEWS_H

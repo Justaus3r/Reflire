@@ -14,14 +14,21 @@ ReFlire::ReFlire(){
 
 void ReFlire::startEventLoop(){
     Login login_view;
+    Dashboard dashboard_view;
+
     login_view.registerController(login_view_controller);
-    
+   
+
+    login_view.next_view = &dashboard_view;
+
     Image background = LoadImage("../res/airline-travel-bg.png");
     ImageResize(&background, WINDOW_WIDTH, WINDOW_HEIGHT);
     Texture2D bg_texture = LoadTextureFromImage(background);
     UnloadImage(background);
     SetTargetFPS(60);
     
+    View* current_view = &login_view;
+
     while (!WindowShouldClose()) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -29,7 +36,7 @@ void ReFlire::startEventLoop(){
         if (background.data == NULL) {
             std::cout<<"WARNING: Failed to load background image.";
         } 
-        login_view.render();
+        current_view = current_view->render(); // will return the next view if, current view is complete
 
         EndDrawing();
     }

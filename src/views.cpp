@@ -8,6 +8,7 @@ const int TEXTBOX_STATUS  = 2;
 
 Context ctx;
 
+
 void View::executeController(Context& controller_ctx){
     this->view_controller(controller_ctx);
 }
@@ -40,7 +41,7 @@ void Login::validate_internal_states(bool signup_new, bool signin_new, bool user
     }
 }
 
-void Login::render(){
+View* Login::render(){
     
     this->title = "Reflire Airline Reservation System";
     this->title_x = WINDOW_WIDTH / 2 -  (MeasureText(this->title, FONT_SIZE_HEAD) / 2);
@@ -111,9 +112,49 @@ void Login::render(){
     }
 
     }
+    
+    if(ctx.is_currentview_complete){
+        return this->next_view; 
+    }
+    else{
+        return this;
+    }
 }
 
 
+
 void Login::registerController(void(*view_controller)(Context& ctx)){
+    this->view_controller = view_controller;
+}
+
+
+
+View* Dashboard::render() {
+    
+    DrawText("Dashboard", WINDOW_WIDTH / 2 - MeasureText("Dashboard", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, GOLD);
+
+    // Define the rectangles for the dashboard options (these represent the boxes)
+    Rectangle charter_flight_rect = { WINDOW_WIDTH * 0.1, WINDOW_HEIGHT * 0.3, 250, 85 };
+    Rectangle query_services_rect = { WINDOW_WIDTH * 0.6, WINDOW_HEIGHT * 0.3, 250, 85 };
+    Rectangle contact_us_rect = { WINDOW_WIDTH * 0.1, WINDOW_HEIGHT * 0.6, 250, 85 };
+    Rectangle check_reservation_rect = { WINDOW_WIDTH * 0.6, WINDOW_HEIGHT * 0.6, 250, 85 };
+
+    // Draw the boxes (using rectangles) around each section
+    DrawRectangleRec(charter_flight_rect, LIGHTGRAY);
+    DrawRectangleRec(query_services_rect, LIGHTGRAY);
+    DrawRectangleRec(contact_us_rect, LIGHTGRAY);
+    DrawRectangleRec(check_reservation_rect, LIGHTGRAY);
+
+    // Draw each button using Raygui with text in center
+    GuiButton((Rectangle){charter_flight_rect.x + 10, charter_flight_rect.y + 10, charter_flight_rect.width - 20, charter_flight_rect.height - 20}, "Charter");
+    GuiButton((Rectangle){query_services_rect.x + 10, query_services_rect.y + 10, query_services_rect.width - 20, query_services_rect.height - 20}, "Query");
+    GuiButton((Rectangle){contact_us_rect.x + 10, contact_us_rect.y + 10, contact_us_rect.width - 20, contact_us_rect.height - 20}, "Contact");
+    GuiButton((Rectangle){check_reservation_rect.x + 10, check_reservation_rect.y + 10, check_reservation_rect.width - 20, check_reservation_rect.height - 20}, "Reservation");
+
+    return this;
+
+}
+
+void Dashboard::registerController(void(*view_controller)(Context& ctx)){
     this->view_controller = view_controller;
 }

@@ -8,7 +8,7 @@ prepare_build:
 build : prepare_build
 	g++ -c src/reflire.cpp
 	g++ -c src/controller.cpp
-	g++ -c src/views.cpp
+	g++ -c src/views.cpp 
 	g++ -c src/main.cpp
 	g++ -c src/misc.cpp
 

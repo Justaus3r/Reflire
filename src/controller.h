@@ -8,6 +8,7 @@ struct Context{
     bool is_doing_signup;
     bool show_error_passlen = false;
     bool show_error_nospecialchar = false;
+    bool is_currentview_complete = false;
 };
 
 

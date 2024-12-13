@@ -43,8 +43,11 @@ void login_view_controller(Context& ctx){
      int result = GuiMessageBox((Rectangle){ 85, 70, 550, 200 },
                     "#191#ERROR", "PIN Number must have a alteast 1 special character", "Return");
      if(result >= 0) ctx.show_error_nospecialchar = false;
+     return;
     }
-
+    
+    ctx.is_currentview_complete = true;
+    
     break;
     }
    
@@ -52,8 +55,7 @@ void login_view_controller(Context& ctx){
         ;
     break;
     }
-
-
+    
     }
 
 }
