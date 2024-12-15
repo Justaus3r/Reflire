@@ -18,7 +18,7 @@ $ make clean
 
 ## Windows
 
-Use ``make`` to build it. Have raylib installed beforehand. Also note that a patched version of raygui maybe required for this project, so do patch raygui if you are facing [#407](https://github.com/raysan5/raygui/issues/407).
+Use ``make`` to build it. Have raylib installed beforehand. Also note that a patched version of raygui maybe required for this project, so do patch raygui if you are facing [#407](https://github.com/raysan5/raygui/issues/407). This Project also assumes that raylib is installed at ``C:\\raylib\\raylib\\src``, so change the path  in ``Makefile`` if its installed elsewhere.
 ```
 $ make
 $ ./builds/reflire
