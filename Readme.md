@@ -2,7 +2,23 @@
 Airline flight reservation system(Semester project). 
 
 # Build Instruction
-Use ``make`` to build it. Have raylib installed beforehand. Also note that a patched version of raygui is used in this project, so do patch raygui if you are facing [#407](https://github.com/raysan5/raygui/issues/407).
+## Linux
+
+**Note**: Do ensure that raylib is installed beforehand. Instructions are available [here](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux)
+
+```
+$ git clone https://github.com/Justaus3r/Reflire.git
+$ cd src
+$ wget "https://raw.githubusercontent.com/raysan5/raylib/refs/heads/master/src/raylib.h"
+$ cd ../
+$ make
+# for cleaning all the obj/build files
+$ make clean
+```
+
+## Windows
+
+Use ``make`` to build it. Have raylib installed beforehand. Also note that a patched version of raygui maybe required for this project, so do patch raygui if you are facing [#407](https://github.com/raysan5/raygui/issues/407).
 ```
 $ make
 $ ./builds/reflire

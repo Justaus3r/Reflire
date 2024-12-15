@@ -45,7 +45,8 @@ void login_view_controller(Context& ctx){
      if(result >= 0) ctx.show_error_nospecialchar = false;
      return;
     }
-    
+   
+
     ctx.is_currentview_complete = true;
     
     break;
