@@ -15,11 +15,13 @@ ReFlire::ReFlire(){
 void ReFlire::startEventLoop(){
     Login login_view;
     Dashboard dashboard_view;
+    CharterRequest charter_req; 
 
     login_view.registerController(login_view_controller);
-   
+     
 
     login_view.next_view = &dashboard_view;
+    dashboard_view.next_view = &charter_req; 
 
     Image background = LoadImage("../res/airline-travel-bg.png");
     ImageResize(&background, WINDOW_WIDTH, WINDOW_HEIGHT);

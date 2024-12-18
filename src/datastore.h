@@ -1,11 +1,17 @@
 #ifndef DATASTORE_H
 #define DATASTORE_H
 
+#ifdef _WIN32
+    #define PATH_DELIMITER "\\"
+#else
+    #define PATH_DELIMITER "/"
+#endif
+
 #include <iostream>
 
 enum DataStoreType{
-    CREDENTIALS;
-    RESERVATIONS;
+    CREDENTIALS,
+    RESERVATIONS
 };
 
 
@@ -24,20 +30,23 @@ struct Reservation{
 
 
 struct Datastore{ 
-    std::string user_names[100] = {0};
-    std::string passwords[100] = {0};
+    std::string user_name;
+    std::string password;
     Reservation reservation;
 };
 
 
 class DataStore{
     private:
-        Datastore d_store;
+        char dstore_name[100];
+        char creds_file[200] = "creds.creds";
+        char reservations_file[200] = "reservations.csv";
     public:
-    DataStore(char* datastore_name);
-    void createDataStore(Datastore d_store, DataStoreType ds_type);
-    DataStore* readDataStore(char* datastore_name, DataStoreType ds_type);
-    void WriteToDataStore();
+        Datastore d_store;
+        DataStore(char datastore_name[100]);
+        void createDataStore(Datastore dstore, DataStoreType ds_type);
+        DataStore* readDataStore(char datastore_name[100], DataStoreType ds_type);
+        void writeToDataStore(Datastore dstore, DataStoreType ds_type);
 };
 
 

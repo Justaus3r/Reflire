@@ -37,7 +37,7 @@ class Login: public View{
         int signin_button_x = WINDOW_WIDTH / 2 + ( 2 );
         int signin_button_y = signup_button_y;
         int input_size = 128;
-        bool input_editable = true;
+       bool input_editable = true;
         char* username_text = "Username:";
         char* password_text = "PIN Number:";
         int textbox_size = 150;
@@ -77,5 +77,52 @@ class Dashboard: public View{
         View* render();
         void registerController(void(*view_controller)(Context& ctx));
 };
+
+
+class CharterRequest : public View {
+private:
+    bool input_editable = true;
+    const int textbox_size = 200;
+    const int input_size = 128;
+
+    
+    int name_textbox_x =  WINDOW_WIDTH / 2 - textbox_size / 2;
+    int name_textbox_y = WINDOW_HEIGHT / 2 - 200;
+    int from_textbox_y = name_textbox_y + 80;
+    int to_textbox_y = from_textbox_y + 100;
+    int date_textbox_y = from_textbox_y + 105;
+    int phone_textbox_y = date_textbox_y + 80;
+
+   
+    char name_text[128] = {0};
+    char from_text[128] = {0};
+    char to_text[128] = {0};
+    char date_text[128] = {0};
+    char phone_text[128] = {0};
+    char email_text[128] = {0};
+    char num_people_text[128] = {0};
+
+    
+    int search_button_x = WINDOW_WIDTH / 2 - (MeasureText("Search", FONT_SIZE) + 20) / 2;
+    int search_button_y = phone_textbox_y + 90;
+
+   
+
+
+    bool name_textbox_active = true;
+    bool from_textbox_active = false;
+    bool to_textbox_active = false;
+    bool date_textbox_active = false;
+    bool phone_textbox_active = false;
+    bool email_textbox_active = false;
+    bool numpeople_textbox_active = false;
+
+public:
+    CharterRequest(){};
+    View* render();
+    void registerController(void(*view_controller)(Context& ctx));
+    void validate_internal_states(bool name_butt_st, bool from_butt_st, bool to_butt_st, bool date_butt_st, bool phone_butt_st, bool email_butt_st, bool numpeople_butt_st);
+};
+
 
 #endif //VIEWS_H

@@ -3,12 +3,15 @@
 
 
 struct Context{
-    char* username;
-    char* password;
+    char username[128];
+    char password[128];
     bool is_doing_signup;
     bool show_error_passlen = false;
     bool show_error_nospecialchar = false;
+    bool show_error_nouser = false;
+    bool has_completed_signup = false;
     bool is_currentview_complete = false;
+    bool login_failed = false;
 };
 
 
