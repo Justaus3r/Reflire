@@ -188,74 +188,31 @@ void Dashboard::registerController(void(*view_controller)(Context& ctx)){
 void CharterRequest::validate_internal_states(bool name_butt_st, bool from_butt_st, bool to_butt_st, bool date_butt_st, bool phone_butt_st, bool email_butt_st, bool numpeople_butt_st) {
 
     if(name_butt_st){
-        name_textbox_active = true;
-        from_textbox_active = false;
-        to_textbox_active = false;
-        date_textbox_active = false;
-        phone_textbox_active = false;
-        email_textbox_active = false;
-        numpeople_textbox_active = false;
+        name_textbox_active = !name_textbox_active;
     }
 
     else if(from_butt_st){
-        name_textbox_active = false;
-        from_textbox_active = true;
-        to_textbox_active = false;
-        date_textbox_active = false;
-        phone_textbox_active = false;
-        email_textbox_active = false;
-        numpeople_textbox_active = false;
+        from_textbox_active = !from_textbox_active;
     }
 
     else if(to_butt_st){
-        name_textbox_active = false;
-        from_textbox_active = false;
-        to_textbox_active = true;
-        date_textbox_active = false;
-        phone_textbox_active = false;
-        email_textbox_active = false;
-        numpeople_textbox_active = false;
+        to_textbox_active = !to_textbox_active;
     }
 
     else if(date_butt_st){
-        name_textbox_active = false;
-        from_textbox_active = false;
-        to_textbox_active = false;
-        date_textbox_active = true;
-        phone_textbox_active = false;
-        email_textbox_active = false;
-        numpeople_textbox_active = false;
-
+        date_textbox_active = !date_textbox_active;
     }
 
     else if(phone_butt_st){
-        name_textbox_active = false;
-        from_textbox_active = false;
-        to_textbox_active = false;
-        date_textbox_active = false;
-        phone_textbox_active = true;
-        email_textbox_active = false;
-        numpeople_textbox_active = false;
+        phone_textbox_active = !phone_textbox_active;
     }
 
     else if(email_butt_st){
-        name_textbox_active = false;
-        from_textbox_active = false;
-        to_textbox_active = false;
-        date_textbox_active = false;
-        phone_textbox_active = false;
-        email_textbox_active = true;
-        numpeople_textbox_active = false;
+        email_textbox_active = !email_textbox_active;
     }
 
     else if(numpeople_butt_st){
-        name_textbox_active = false;
-        from_textbox_active = false;
-        to_textbox_active = false;
-        date_textbox_active = false;
-        phone_textbox_active = false;
-        email_textbox_active = false;
-        numpeople_textbox_active = true;
+        numpeople_textbox_active = !numpeople_textbox_active;
     }
 
 }
@@ -277,13 +234,13 @@ View* CharterRequest::render() {
     DrawText("Email:", 595, name_textbox_y, FONT_SIZE, BLACK);
     DrawText("No. of People:", 500, date_textbox_y, FONT_SIZE, BLACK);
 
-    bool name_butt_st = GuiTextBox((Rectangle){150, name_textbox_y, textbox_size, 20}, name_text, input_size, true);
-    bool from_butt_st = GuiTextBox((Rectangle){150, from_textbox_y, textbox_size, 20}, from_text, input_size, true);
-    bool to_butt_st = GuiTextBox((Rectangle){700, from_textbox_y, textbox_size, 20}, to_text, input_size, true);
-    bool date_butt_st = GuiTextBox((Rectangle){150, date_textbox_y, textbox_size, 20}, date_text, input_size, true);
-    bool phone_butt_st = GuiTextBox((Rectangle){name_textbox_x, phone_textbox_y+20, textbox_size, 20}, phone_text, input_size, true);
-    bool email_butt_st = GuiTextBox((Rectangle){700, name_textbox_y, textbox_size, 20}, email_text, input_size, true);
-    bool numpeople_butt_st = GuiTextBox((Rectangle){710, date_textbox_y, textbox_size, 20}, num_people_text, input_size, true);
+    bool name_butt_st = GuiTextBox((Rectangle){150, name_textbox_y, textbox_size, 20}, name_text, input_size, name_textbox_active);
+    bool from_butt_st = GuiTextBox((Rectangle){150, from_textbox_y, textbox_size, 20}, from_text, input_size, from_textbox_active);
+    bool to_butt_st = GuiTextBox((Rectangle){700, from_textbox_y, textbox_size, 20}, to_text, input_size, to_textbox_active);
+    bool date_butt_st = GuiTextBox((Rectangle){150, date_textbox_y, textbox_size, 20}, date_text, input_size, date_textbox_active);
+    bool phone_butt_st = GuiTextBox((Rectangle){name_textbox_x, phone_textbox_y+20, textbox_size, 20}, phone_text, input_size, phone_textbox_active);
+    bool email_butt_st = GuiTextBox((Rectangle){700, name_textbox_y, textbox_size, 20}, email_text, input_size, email_textbox_active);
+    bool numpeople_butt_st = GuiTextBox((Rectangle){710, date_textbox_y, textbox_size, 20}, num_people_text, input_size, numpeople_textbox_active);
 
     bool do_search_button_status = GuiButton((Rectangle){search_button_x, search_button_y, MeasureText("Search", FONT_SIZE) + 20, 30}, "Search");
      

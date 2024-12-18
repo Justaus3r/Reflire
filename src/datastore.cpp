@@ -116,7 +116,6 @@ DataStore* DataStore::readDataStore(char datastore_name[100], DataStoreType ds_t
                 strcat(creds_filepath, datastore_name);
                 strcat(creds_filepath, path_delimiter);
                 strcat(creds_filepath, creds_file);
-                cout<<"CREDS FILEPATH: "<<creds_filepath<<endl;
                 fstream creds_file;
                 creds_file.open(creds_filepath, ios::in);
                 
