@@ -98,3 +98,22 @@ void login_view_controller(Context& ctx){
     }
 
 }
+
+
+void make_reservations_view_controller(Context& ctx){
+
+    DataStore dstore("reservation");
+    Datastore ds;
+
+    strcpy(ds.reservation.name, ctx.name);
+    strcpy(ds.reservation.email, ctx.email);
+    strcpy(ds.reservation.from, ctx.from);
+    strcpy(ds.reservation.to, ctx.to_);
+    strcpy(ds.reservation.date_departure, ctx.date);
+    strcpy(ds.reservation.no_of_people, ctx.num_people);
+    strcpy(ds.reservation.ph_no, ctx.phone);
+
+    dstore.createDataStore(ds, RESERVATIONS);
+
+    ctx.is_currentview_complete = true;
+}

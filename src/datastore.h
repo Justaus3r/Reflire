@@ -15,16 +15,15 @@ enum DataStoreType{
 };
 
 
-//reservation_no,name,email,from,to,date,no_of_people,ph.no
+//name,email,from,to,date,no_of_people,ph.no
 struct Reservation{
-    std::string reservation_no;
-    std::string name;
-    std::string email;
-    std::string from;
-    std::string to;
-    std::string date_departure;
-    std::string no_of_people;
-    std::string ph_no;
+    char name[128];
+    char email[128];
+    char from[128];
+    char to[128];
+    char date_departure[128];
+    char no_of_people[128];
+    char ph_no[128];
 };
 
 
@@ -32,7 +31,7 @@ struct Reservation{
 struct Datastore{ 
     std::string user_name;
     std::string password;
-    Reservation reservation;
+    Reservation reservation, reservation_store[100];
 };
 
 

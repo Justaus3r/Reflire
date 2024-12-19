@@ -127,6 +127,7 @@ View* Login::render(){
     }
 
     if(ctx.is_currentview_complete){
+        ctx.is_currentview_complete = false;
         return this->next_view; 
     }
     else{
@@ -176,7 +177,6 @@ View* Dashboard::render() {
     }
 
 
-
     return this;
 
 }
@@ -219,7 +219,7 @@ void CharterRequest::validate_internal_states(bool name_butt_st, bool from_butt_
 
 View* CharterRequest::render() {
   
-    this->title = "Request a Quote";
+    this->title = "Make Flight Reservation";
     this->title_x = WINDOW_WIDTH / 2 -  (MeasureText(this->title, FONT_SIZE_HEAD) / 2);
     this->title_y = WINDOW_HEIGHT * 0.08; 
     DrawText(this->title, title_x, title_y, FONT_SIZE_HEAD, DARKGRAY);
@@ -242,16 +242,84 @@ View* CharterRequest::render() {
     bool email_butt_st = GuiTextBox((Rectangle){700, name_textbox_y, textbox_size, 20}, email_text, input_size, email_textbox_active);
     bool numpeople_butt_st = GuiTextBox((Rectangle){710, date_textbox_y, textbox_size, 20}, num_people_text, input_size, numpeople_textbox_active);
 
-    bool do_search_button_status = GuiButton((Rectangle){search_button_x, search_button_y, MeasureText("Search", FONT_SIZE) + 20, 30}, "Search");
+    bool do_reservation_button_status = GuiButton((Rectangle){makereservation_button_x, makereservation_button_y, MeasureText("Make Reservation", FONT_SIZE) + 20, 30}, "Make Reservation");
      
 
     validate_internal_states(name_butt_st, from_butt_st, to_butt_st, date_butt_st, phone_butt_st, email_butt_st, numpeople_butt_st);
-    
-    return this;
    
+    strcpy(ctx.name, name_text);
+    strcpy(ctx.from, from_text);
+    strcpy(ctx.to_, to_text);
+    strcpy(ctx.date, date_text);
+    strcpy(ctx.phone, phone_text);
+    strcpy(ctx.email, email_text);
+    strcpy(ctx.num_people, num_people_text);
+
+    if(do_reservation_button_status){
+        this->executeController(ctx);
+    }
+
+    if(ctx.is_currentview_complete){
+        ctx.is_currentview_complete = false;
+        return this->next_view;
+    }
+    else{
+        return this;
+    }
 }
 
 void CharterRequest::registerController(void(*view_controller)(Context& ctx)){
     this->view_controller = view_controller;
 }
 
+View* MakingReservationOverlay::render(){
+    if(start_timer){
+        start_time = std::chrono::system_clock::now();
+        start_timer = false;
+    }
+ 
+    DrawText(overlay_text, overlay_text_x, overlay_text_y, FONT_SIZE, BLACK ); 
+    DrawText(overlay_progress, overlay_text_x * 0.80, (overlay_text_y + 10), FONT_SIZE, BLACK );
+
+    std::chrono::time_point<std::chrono::system_clock> time_now = std::chrono::system_clock::now(); 
+    std::chrono::duration<double> time_elapsed = time_now - start_time;
+        
+    int time_elapsed_int = time_elapsed.count();
+    // add a . every second
+    if(time_elapsed_int == 1){
+        strcat(overlay_progress, ".");
+    }
+
+    else if(time_elapsed_int == 2){
+        // do nothing on 2nd second
+        ;
+    }
+
+    else if(time_elapsed_int == 3){
+        strcat(overlay_progress, ".");
+    }
+
+    else if(time_elapsed_int == 4){
+        //strcat(overlay_progress, ".");
+        ;
+    }
+
+    else if(time_elapsed_int == 5){
+        return this->next_view;
+    }
+   return this; 
+}
+
+void MakingReservationOverlay::registerController(void(*view_controller)(Context& ctx)){
+    this->view_controller = view_controller;
+}
+
+
+View* Ticket::render(){
+    DrawText("FINAL VIEW", 0,0, 14, BLACK);
+    return this;
+}
+
+void Ticket::registerController(void(*view_controller)(Context& ctx)){
+    this->view_controller = view_controller;
+}

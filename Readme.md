@@ -1,5 +1,6 @@
 # Reflire
-Airline flight reservation system(Semester project). 
+Airline flight reservation system(Semester project).
+
 
 # Build Instruction
 ## Linux
@@ -25,3 +26,11 @@ $ ./builds/reflire
 # for cleaning all the junk
 $ make clean 
 ```
+
+## Made by
+Enrollment#1: 147
+Enrollment#2: 128
+
+
+## License
+Licensed under MIT license.

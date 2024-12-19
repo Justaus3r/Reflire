@@ -67,31 +67,29 @@ void DataStore::writeToDataStore(Datastore dstore, DataStoreType ds_type){
             strcat(reservations_filepath, reservations_filepath);
             reservations_file.open(reservations_filepath, ios::out | ios:: app);
             char reservations_record[1024] = "";
-            strcat(reservations_record, dstore.reservation.reservation_no.c_str());
+
+            strcat(reservations_record, dstore.reservation.name);
             strcat(reservations_record, " , ");
 
-            strcat(reservations_record, dstore.reservation.name.c_str());
+            strcat(reservations_record, dstore.reservation.email);
             strcat(reservations_record, " , ");
 
-            strcat(reservations_record, dstore.reservation.email.c_str());
-            strcat(reservations_record, " , ");
-
-            strcat(reservations_record, dstore.reservation.from.c_str());
-            strcat(reservations_record, " , ");
-
-
-            strcat(reservations_record, dstore.reservation.to.c_str());
+            strcat(reservations_record, dstore.reservation.from);
             strcat(reservations_record, " , ");
 
 
-            strcat(reservations_record, dstore.reservation.date_departure.c_str());
+            strcat(reservations_record, dstore.reservation.to);
             strcat(reservations_record, " , ");
 
 
-            strcat(reservations_record, dstore.reservation.no_of_people.c_str());
+            strcat(reservations_record, dstore.reservation.date_departure);
             strcat(reservations_record, " , ");
 
-            strcat(reservations_record, dstore.reservation.ph_no.c_str());
+
+            strcat(reservations_record, dstore.reservation.no_of_people);
+            strcat(reservations_record, " , ");
+
+            strcat(reservations_record, dstore.reservation.ph_no);
             
             string reservations_record_str(reservations_record);
             reservations_file.write(reservations_record_str.data(), reservations_record_str.size());
@@ -133,7 +131,10 @@ DataStore* DataStore::readDataStore(char datastore_name[100], DataStoreType ds_t
 
 
         case RESERVATIONS:{
-        
+            const char* path_delimiter = PATH_DELIMITER;
+            char creds_filepath[200] = "reservations";
+            strcat(creds_filepath, path_delimiter);
+            strcat(creds_filepath, reservations_file);
             break;
         }
 

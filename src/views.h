@@ -2,6 +2,8 @@
 #define VIEWS_H
 
 #include <iostream>
+#include <chrono>
+#include <ctime>
 #include "raylib.h"
 #include "misc.h"
 #include "controller.h"
@@ -103,8 +105,8 @@ private:
     char num_people_text[128] = {0};
 
     
-    int search_button_x = WINDOW_WIDTH / 2 - (MeasureText("Search", FONT_SIZE) + 20) / 2;
-    int search_button_y = phone_textbox_y + 90;
+    int makereservation_button_x = WINDOW_WIDTH / 2 - (MeasureText("Search", FONT_SIZE) + 20) / 2;
+    int makereservation_button_y = phone_textbox_y + 90;
 
    
 
@@ -124,5 +126,29 @@ public:
     void validate_internal_states(bool name_butt_st, bool from_butt_st, bool to_butt_st, bool date_butt_st, bool phone_butt_st, bool email_butt_st, bool numpeople_butt_st);
 };
 
+class MakingReservationOverlay: public View{
+     private:
+        std::chrono::time_point<std::chrono::system_clock> start_time;
+        bool start_timer = true;
+        char overlay_progress[1024] = "..";
+        char overlay_text[128] = "Making Flight Reservation";
+        int overlay_text_x = WINDOW_WIDTH / 2 - (MeasureText(overlay_text, FONT_SIZE) / 2 + 3);
+        int overlay_text_y = WINDOW_HEIGHT / 2;
+
+    public:
+    MakingReservationOverlay(){};
+    View* render();
+    void registerController(void(*view_controller)(Context& ctx));
+
+};
+
+
+class Ticket: public View{
+
+    public:
+        Ticket(){};
+        View* render();
+        void registerController(void(*view_controller)(Context& ctx));
+};
 
 #endif //VIEWS_H
