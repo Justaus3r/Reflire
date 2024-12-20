@@ -102,7 +102,7 @@ void login_view_controller(Context& ctx){
 
 void make_reservations_view_controller(Context& ctx){
 
-    DataStore dstore("reservation");
+    DataStore dstore(ctx.username);
     Datastore ds;
 
     strcpy(ds.reservation.name, ctx.name);

@@ -64,7 +64,9 @@ void DataStore::writeToDataStore(Datastore dstore, DataStoreType ds_type){
             fstream reservations_file;
             char reservations_filepath[200] = "reservations";
             strcat(reservations_filepath, path_delimiter);
-            strcat(reservations_filepath, reservations_filepath);
+            strcat(reservations_filepath, dstore_name);
+            strcat(reservations_filepath, path_delimiter);
+            strcat(reservations_filepath, reservation_file);
             reservations_file.open(reservations_filepath, ios::out | ios:: app);
             char reservations_record[1024] = "";
 
@@ -90,6 +92,8 @@ void DataStore::writeToDataStore(Datastore dstore, DataStoreType ds_type){
             strcat(reservations_record, " , ");
 
             strcat(reservations_record, dstore.reservation.ph_no);
+
+            strcat(reservations_record, "\n");
             
             string reservations_record_str(reservations_record);
             reservations_file.write(reservations_record_str.data(), reservations_record_str.size());
@@ -134,7 +138,7 @@ DataStore* DataStore::readDataStore(char datastore_name[100], DataStoreType ds_t
             const char* path_delimiter = PATH_DELIMITER;
             char creds_filepath[200] = "reservations";
             strcat(creds_filepath, path_delimiter);
-            strcat(creds_filepath, reservations_file);
+            strcat(creds_filepath, reservation_file);
             break;
         }
 

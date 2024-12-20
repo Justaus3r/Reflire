@@ -142,40 +142,77 @@ void Login::registerController(void(*view_controller)(Context& ctx)){
 }
 
 
+void Dashboard::validate_internal_states(bool new_click_queryservices, bool new_click_contactus, bool new_click_pastres){
+    if(new_click_queryservices){
+        query_services_subview_active = true;
+        bool contactus_subview_active = false;
+        bool pastreservations_subview_active = false;
+    }
+
+    else if(new_click_contactus){
+        query_services_subview_active = false;
+        bool contactus_subview_active = true;
+        bool pastreservations_subview_active = false;
+
+    }
+
+    else if(new_click_pastres){
+        query_services_subview_active = false;
+        bool contactus_subview_active = false;
+        bool pastreservations_subview_active = true;
+    }
+}
 
 View* Dashboard::render() {
+    if(!is_subview_active){ 
+        DrawText("Dashboard", WINDOW_WIDTH / 2 - MeasureText("Dashboard", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
+
+        Rectangle charter_flight_rect = { WINDOW_WIDTH * 0.1, WINDOW_HEIGHT * 0.3, 250, 85 };
+        Rectangle query_services_rect = { WINDOW_WIDTH * 0.6, WINDOW_HEIGHT * 0.3, 250, 85 };
+        Rectangle contact_us_rect = { WINDOW_WIDTH * 0.1, WINDOW_HEIGHT * 0.6, 250, 85 };
+        Rectangle check_reservation_rect = { WINDOW_WIDTH * 0.6, WINDOW_HEIGHT * 0.6, 250, 85 };
+
+        DrawRectangleRec(charter_flight_rect, LIGHTGRAY);
+        DrawRectangleRec(query_services_rect, LIGHTGRAY);
+        DrawRectangleRec(contact_us_rect, LIGHTGRAY);
+        DrawRectangleRec(check_reservation_rect, LIGHTGRAY);
+
+        bool clicked_charterflight = GuiButton((Rectangle){charter_flight_rect.x + 10, charter_flight_rect.y + 10, charter_flight_rect.width - 20, charter_flight_rect.height - 20}, "Charter a Flight");
+        bool clicked_queryservices = GuiButton((Rectangle){query_services_rect.x + 10, query_services_rect.y + 10, query_services_rect.width - 20, query_services_rect.height - 20}, "Query Services");
+        bool clicked_contactus = GuiButton((Rectangle){contact_us_rect.x + 10, contact_us_rect.y + 10, contact_us_rect.width - 20, contact_us_rect.height - 20}, "Contact Us");
+        bool clicked_pastreservations = GuiButton((Rectangle){check_reservation_rect.x + 10, check_reservation_rect.y + 10, check_reservation_rect.width - 20, check_reservation_rect.height - 20}, "Past Reservations");
+        if(clicked_charterflight){
+            return this->next_view;     
+        }
+        else if(clicked_queryservices){
+           is_subview_active = true;
+           query_services_subview_active = true;
+        }
+        else if(clicked_contactus){
+            is_subview_active = true;
+            contactus_subview_active = true;
+        }
+
+        else if(clicked_pastreservations){
+            pastreservations_subview_active = true;
+            is_subview_active = true;
+        }
+    }
     
-    DrawText("Dashboard", WINDOW_WIDTH / 2 - MeasureText("Dashboard", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
-
-    Rectangle charter_flight_rect = { WINDOW_WIDTH * 0.1, WINDOW_HEIGHT * 0.3, 250, 85 };
-    Rectangle query_services_rect = { WINDOW_WIDTH * 0.6, WINDOW_HEIGHT * 0.3, 250, 85 };
-    Rectangle contact_us_rect = { WINDOW_WIDTH * 0.1, WINDOW_HEIGHT * 0.6, 250, 85 };
-    Rectangle check_reservation_rect = { WINDOW_WIDTH * 0.6, WINDOW_HEIGHT * 0.6, 250, 85 };
-
-    DrawRectangleRec(charter_flight_rect, LIGHTGRAY);
-    DrawRectangleRec(query_services_rect, LIGHTGRAY);
-    DrawRectangleRec(contact_us_rect, LIGHTGRAY);
-    DrawRectangleRec(check_reservation_rect, LIGHTGRAY);
-
-    bool clicked_charterflight = GuiButton((Rectangle){charter_flight_rect.x + 10, charter_flight_rect.y + 10, charter_flight_rect.width - 20, charter_flight_rect.height - 20}, "Charter a Flight");
-    bool clicked_queryservices = GuiButton((Rectangle){query_services_rect.x + 10, query_services_rect.y + 10, query_services_rect.width - 20, query_services_rect.height - 20}, "Query Services");
-    bool clicked_contactus = GuiButton((Rectangle){contact_us_rect.x + 10, contact_us_rect.y + 10, contact_us_rect.width - 20, contact_us_rect.height - 20}, "Contact Us");
-    bool clicked_pastreservations = GuiButton((Rectangle){check_reservation_rect.x + 10, check_reservation_rect.y + 10, check_reservation_rect.width - 20, check_reservation_rect.height - 20}, "Past Reservations");
-
-    if(clicked_charterflight){
-        return this->next_view;     
-    }
-    else if(clicked_queryservices){
-
-    }
-    else if(clicked_contactus){
-
+    if(query_services_subview_active){
+        
+        DrawText("Query Services", WINDOW_WIDTH / 2 - MeasureText("Dashboard", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
     }
 
-    else if(clicked_pastreservations){
+    else if(contactus_subview_active){
 
+        DrawText("Contact Us", WINDOW_WIDTH / 2 - MeasureText("Dashboard", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
     }
 
+    else if(pastreservations_subview_active){
+        
+        DrawText("Reservations History", WINDOW_WIDTH / 2 - MeasureText("Dashboard", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
+    }
 
     return this;
 
@@ -300,7 +337,7 @@ View* MakingReservationOverlay::render(){
     }
 
     else if(time_elapsed_int == 4){
-        //strcat(overlay_progress, ".");
+        // do nothing on 4th second
         ;
     }
 

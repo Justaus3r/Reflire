@@ -74,9 +74,16 @@ class Login: public View{
 
 
 class Dashboard: public View{
+    private:
+        bool is_subview_active = false;
+        bool query_services_subview_active = false;
+        bool contactus_subview_active = false;
+        bool pastreservations_subview_active = false;
+
     public:
         Dashboard(){};
         View* render();
+        void validate_internal_states(bool new_click_queryservices, bool new_click_contactus, bool new_click_pastres);
         void registerController(void(*view_controller)(Context& ctx));
 };
 
@@ -107,9 +114,6 @@ private:
     
     int makereservation_button_x = WINDOW_WIDTH / 2 - (MeasureText("Search", FONT_SIZE) + 20) / 2;
     int makereservation_button_y = phone_textbox_y + 90;
-
-   
-
 
     bool name_textbox_active = true;
     bool from_textbox_active = false;

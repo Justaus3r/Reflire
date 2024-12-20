@@ -39,7 +39,7 @@ class DataStore{
     private:
         char dstore_name[100];
         char creds_file[200] = "creds.creds";
-        char reservations_file[200] = "reservations.csv";
+        char reservation_file[200] = "reservations.csv";
     public:
         Datastore d_store;
         DataStore(char datastore_name[100]);
