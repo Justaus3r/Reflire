@@ -353,7 +353,36 @@ void MakingReservationOverlay::registerController(void(*view_controller)(Context
 
 
 View* Ticket::render(){
-    DrawText("FINAL VIEW", 0,0, 14, BLACK);
+   DrawText("Flight Ticket", WINDOW_WIDTH / 2 - MeasureText("Flight Ticket", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, DARKGRAY);
+
+    Rectangle ticketBox = {WINDOW_WIDTH * 0.1, WINDOW_HEIGHT * 0.1, WINDOW_WIDTH * 0.8, WINDOW_HEIGHT * 0.7};
+    DrawRectangleRec(ticketBox, LIGHTGRAY);
+    DrawRectangleLinesEx(ticketBox, 10, DARKBLUE);
+
+    Rectangle ticketBoxShadow = {WINDOW_WIDTH * 0.1 + 5, WINDOW_HEIGHT * 0.1 + 5, WINDOW_WIDTH * 0.8, WINDOW_HEIGHT * 0.7};
+    DrawRectangleRec(ticketBoxShadow, Color{0, 0, 0, 50});
+
+    std::string name(ctx.name);
+    std::string num_of_people(ctx.num_people);
+    std::string date(ctx.date);
+    std::string from(ctx.from);
+    std::string to(ctx.to_);
+    std::string ph_no(ctx.phone);
+
+    DrawText(("Flight Curator: " + name).c_str(), ticketBox.x + 20, ticketBox.y + 20, FONT_SIZE, BLACK);
+    DrawText(("Number of People: " + num_of_people).c_str(), ticketBox.x + 20, ticketBox.y + 50, FONT_SIZE, BLACK);
+    DrawText(("Date: " + date).c_str(), ticketBox.x + 20, ticketBox.y + 80, FONT_SIZE, BLACK);
+    DrawText(("From: " + from).c_str(), ticketBox.x + 20, ticketBox.y + 110, FONT_SIZE, BLACK);
+    DrawText(("To: " + to).c_str(), ticketBox.x + 20, ticketBox.y + 140, FONT_SIZE, BLACK);
+    DrawText(("Phone Number: " + ph_no).c_str(), ticketBox.x + 20, ticketBox.y + 170, FONT_SIZE, BLACK);
+
+    DrawLine(ticketBox.x, ticketBox.y + 200, ticketBox.x + ticketBox.width, ticketBox.y + 200, DARKGRAY);
+
+    Rectangle finishButtonRect = {WINDOW_WIDTH * 0.7, WINDOW_HEIGHT * 0.8, 150, 40};
+    GuiButton(finishButtonRect, "Finish");
+
+    DrawText("Thank you for booking with us!", WINDOW_WIDTH / 2 - MeasureText("Thank you for booking with us!", FONT_SIZE) / 2, ticketBox.y + 230, FONT_SIZE, DARKGRAY);
+
     return this;
 }
 

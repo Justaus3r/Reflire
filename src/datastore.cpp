@@ -61,6 +61,10 @@ void DataStore::writeToDataStore(Datastore dstore, DataStoreType ds_type){
         
         case RESERVATIONS:{
             const char* path_delimiter = PATH_DELIMITER;
+            char base_cmd[200] = "mkdir reservations";
+            strcat(base_cmd, path_delimiter);
+            strcat(base_cmd, this->dstore_name);
+            system(base_cmd);
             fstream reservations_file;
             char reservations_filepath[200] = "reservations";
             strcat(reservations_filepath, path_delimiter);
@@ -136,10 +140,26 @@ DataStore* DataStore::readDataStore(char datastore_name[100], DataStoreType ds_t
 
         case RESERVATIONS:{
             const char* path_delimiter = PATH_DELIMITER;
-            char creds_filepath[200] = "reservations";
-            strcat(creds_filepath, path_delimiter);
-            strcat(creds_filepath, reservation_file);
-            break;
+            char reservations_filepath[200] = "reservations";
+            strcat(reservations_filepath, path_delimiter);
+            strcat(reservations_filepath, dstore_name);
+            strcat(reservations_filepath, path_delimiter);
+            strcat(reservations_filepath, reservation_file);
+            fstream reser_file;
+
+            reser_file.open(reservations_filepath, ios::in);
+
+        
+            std::string line;
+            int counter = 0; 
+
+            while(std::getline(reser_file, line)){
+                if(! ( reser_file  >> dstore->d_store.reservation_store[counter].name >> dstore->d_store.reservation_store[counter].email >> dstore->d_store.reservation_store[counter].from >> dstore->d_store.reservation_store[counter].from >> dstore->d_store.reservation_store[counter].to >> dstore->d_store.reservation_store[counter].date_departure >> dstore->d_store.reservation_store[counter].no_of_people >> dstore->d_store.reservation_store[counter].ph_no )){
+                    break;
+                }
+                ++counter;
+            }    
+            return dstore;
         }
 
     }
