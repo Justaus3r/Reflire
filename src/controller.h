@@ -26,4 +26,7 @@ void login_view_controller(Context& ctx);
 
 void make_reservations_view_controller(Context& ctx);
 
+void finished_booking_controller(Context& ctx);
+
+
 #endif

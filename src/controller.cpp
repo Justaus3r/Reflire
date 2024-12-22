@@ -117,3 +117,19 @@ void make_reservations_view_controller(Context& ctx){
 
     ctx.is_currentview_complete = true;
 }
+
+
+void finished_booking_controller(Context& ctx){
+    // emptying all the input buffers for ctx
+    // before restarting at dashboard
+
+    strcpy(ctx.name, "");
+    strcpy(ctx.from, "");
+    strcpy(ctx.to_, "");
+    strcpy(ctx.date, "");
+    strcpy(ctx.phone, "");
+    strcpy(ctx.email, "");
+    strcpy(ctx.num_people, "");
+
+    ctx.is_currentview_complete = true;
+}

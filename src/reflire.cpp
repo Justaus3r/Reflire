@@ -21,12 +21,15 @@ void ReFlire::startEventLoop(){
 
     login_view.registerController(login_view_controller);
     charter_req_view.registerController(make_reservations_view_controller);     
+    ticket_view.registerController(finished_booking_controller);
+
 
     login_view.next_view = &dashboard_view;
     dashboard_view.next_view = &charter_req_view; 
     charter_req_view.next_view = &makereservation_overlay_view;
     makereservation_overlay_view.next_view = &ticket_view;
     ticket_view.next_view = &dashboard_view;
+   
 
     Image background = LoadImage("../res/airline-travel-bg.png");
     ImageResize(&background, WINDOW_WIDTH, WINDOW_HEIGHT);

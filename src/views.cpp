@@ -181,6 +181,7 @@ View* Dashboard::render() {
         bool clicked_queryservices = GuiButton((Rectangle){query_services_rect.x + 10, query_services_rect.y + 10, query_services_rect.width - 20, query_services_rect.height - 20}, "Query Services");
         bool clicked_contactus = GuiButton((Rectangle){contact_us_rect.x + 10, contact_us_rect.y + 10, contact_us_rect.width - 20, contact_us_rect.height - 20}, "Contact Us");
         bool clicked_pastreservations = GuiButton((Rectangle){check_reservation_rect.x + 10, check_reservation_rect.y + 10, check_reservation_rect.width - 20, check_reservation_rect.height - 20}, "Past Reservations");
+        
         if(clicked_charterflight){
             return this->next_view;     
         }
@@ -201,7 +202,40 @@ View* Dashboard::render() {
     
     if(query_services_subview_active){
         
-        DrawText("Query Services", WINDOW_WIDTH / 2 - MeasureText("Dashboard", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
+        DrawText("Frequently Asked Questions", WINDOW_WIDTH / 2 - MeasureText("Frequently Asked Questions", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
+     
+        Rectangle contactInRect = { 50, 100, 900, 400 }; 
+        Rectangle backButtRect = { 400, 530, 100, 40 };
+
+        DrawRectangleRec(contactInRect, WHITE);
+        DrawRectangleLinesEx(contactInRect, 5, DARKGRAY);
+
+        std::string query1("Do you offer one-way or round-trip charter options?");
+        std::string ans1("Yes, we provide both one-way and round-trip charter options tailored to your need"); 
+        std::string query2("What is your policy for cancellations, refunds, or rescheduling?");
+        std::string ans2("Cancellation and rescheduling policies vary based on the booking agreement, with potential fees applied. Refunds depend on the notice period and terms of the contract.");
+        std::string query3("Do you offer corporate packages for business travel?");
+        std::string ans3("Yes, we offer customizable corporate packages designed for business travel, including priority services and flexible scheduling."); 
+
+
+        DrawText(("Q->" + query1).c_str(), contactInRect.x + 20, contactInRect.y + 20, 30, BLACK);
+        DrawText(("" + ans1).c_str(), contactInRect.x + 20, contactInRect.y + 60, 20, DARKGRAY);
+
+    
+        DrawText(("Q->" + query2).c_str(), contactInRect.x + 20, contactInRect.y + 130, 30, BLACK);
+        DrawText(("" + ans2).c_str(), contactInRect.x + 20, contactInRect.y + 180, 20, DARKGRAY);  
+
+        DrawText(("Q->" + query3).c_str(), contactInRect.x + 20, contactInRect.y + 230, 30, BLACK);
+        DrawText(("" + ans3).c_str(), contactInRect.x + 20, contactInRect.y + 275, 20, DARKGRAY);  
+
+
+
+    
+        if (GuiButton(backButtRect, "Back")) {
+
+        }
+
+
     }
 
     else if(contactus_subview_active){
@@ -297,6 +331,17 @@ View* CharterRequest::render() {
     }
 
     if(ctx.is_currentview_complete){
+        //we empty all the input buffers before continuing to
+        // the next view
+        
+        strcpy(name_text, "");
+        strcpy(from_text, "");
+        strcpy(to_text, "");
+        strcpy(date_text, "");
+        strcpy(phone_text, "");
+        strcpy(email_text, "");
+        strcpy(num_people_text, "");
+
         ctx.is_currentview_complete = false;
         return this->next_view;
     }
@@ -342,6 +387,10 @@ View* MakingReservationOverlay::render(){
     }
 
     else if(time_elapsed_int == 5){
+        ctx.is_currentview_complete = false;
+        start_timer = true;
+        strcpy(overlay_progress, "");
+
         return this->next_view;
     }
    return this; 
@@ -363,6 +412,7 @@ View* Ticket::render(){
     DrawRectangleRec(ticketBoxShadow, Color{0, 0, 0, 50});
 
     std::string name(ctx.name);
+    std::string email(ctx.email);
     std::string num_of_people(ctx.num_people);
     std::string date(ctx.date);
     std::string from(ctx.from);
@@ -370,18 +420,29 @@ View* Ticket::render(){
     std::string ph_no(ctx.phone);
 
     DrawText(("Flight Curator: " + name).c_str(), ticketBox.x + 20, ticketBox.y + 20, FONT_SIZE, BLACK);
-    DrawText(("Number of People: " + num_of_people).c_str(), ticketBox.x + 20, ticketBox.y + 50, FONT_SIZE, BLACK);
-    DrawText(("Date: " + date).c_str(), ticketBox.x + 20, ticketBox.y + 80, FONT_SIZE, BLACK);
-    DrawText(("From: " + from).c_str(), ticketBox.x + 20, ticketBox.y + 110, FONT_SIZE, BLACK);
-    DrawText(("To: " + to).c_str(), ticketBox.x + 20, ticketBox.y + 140, FONT_SIZE, BLACK);
-    DrawText(("Phone Number: " + ph_no).c_str(), ticketBox.x + 20, ticketBox.y + 170, FONT_SIZE, BLACK);
+    DrawText(("Email: " + email).c_str(), ticketBox.x + 20, ticketBox.y + 50, FONT_SIZE, BLACK);
+    DrawText(("Number of People: " + num_of_people).c_str(), ticketBox.x + 20, ticketBox.y + 80, FONT_SIZE, BLACK);
+    DrawText(("Date: " + date).c_str(), ticketBox.x + 20, ticketBox.y + 110, FONT_SIZE, BLACK);
+    DrawText(("From: " + from).c_str(), ticketBox.x + 20, ticketBox.y + 140, FONT_SIZE, BLACK);
+    DrawText(("To: " + to).c_str(), ticketBox.x + 20, ticketBox.y + 170, FONT_SIZE, BLACK);
+    DrawText(("Phone Number: " + ph_no).c_str(), ticketBox.x + 20, ticketBox.y + 200, FONT_SIZE, BLACK);
 
-    DrawLine(ticketBox.x, ticketBox.y + 200, ticketBox.x + ticketBox.width, ticketBox.y + 200, DARKGRAY);
+    DrawLine(ticketBox.x, ticketBox.y + 230, ticketBox.x + ticketBox.width, ticketBox.y + 230, DARKGRAY);
+
+    DrawText("Thank you for booking with us!", WINDOW_WIDTH / 2 - MeasureText("Thank you for booking with us!", FONT_SIZE) / 2, ticketBox.y + 260, FONT_SIZE, DARKGRAY);
 
     Rectangle finishButtonRect = {WINDOW_WIDTH * 0.7, WINDOW_HEIGHT * 0.8, 150, 40};
-    GuiButton(finishButtonRect, "Finish");
+    bool has_finished_ticketing = GuiButton(finishButtonRect, "Finish");
 
-    DrawText("Thank you for booking with us!", WINDOW_WIDTH / 2 - MeasureText("Thank you for booking with us!", FONT_SIZE) / 2, ticketBox.y + 230, FONT_SIZE, DARKGRAY);
+
+    if(has_finished_ticketing){
+        this->executeController(ctx); 
+    } 
+
+    if(ctx.is_currentview_complete){
+        ctx.is_currentview_complete = false;
+        return this->next_view;
+    }
 
     return this;
 }
