@@ -3,6 +3,7 @@
 #include <string.h>
 #include "controller.h"
 #include "datastore.h"
+#include <iterator>
 #include <iostream>
 
 
@@ -132,4 +133,56 @@ void finished_booking_controller(Context& ctx){
     strcpy(ctx.num_people, "");
 
     ctx.is_currentview_complete = true;
+}
+
+void dashboard_showpastreservations_controller(Context& ctx){
+    int init_x = ctx.x;
+    int init_y = ctx.y + 30;
+    
+    DrawText("Name  Email  From  To  DateOfDeparture NoOfPeople Ph.No", ctx.x, ctx.y, 18, DARKBLUE);
+
+    DataStore dstore(ctx.username);
+    DataStore* read_store;
+
+    read_store = dstore.readDataStore(ctx.username, RESERVATIONS);
+    
+    int store_elements = 0;
+    
+    for(int i=0;i<100;++i){ 
+        if((!read_store->d_store.reservation_store[i].is_occupied)) break;
+            ++store_elements;
+    } 
+   
+    int start_reservation_count = 0; 
+    
+    if(store_elements > 5){
+      start_reservation_count = store_elements - 6; // if reservations are greater than 5, then take the last 5 of them. its since cuz, we got 0-indexed arrays
+    }
+    
+     
+    char row[1024] = "";
+    int offset = 0;
+    std::string idx_no;
+    for(int j=start_reservation_count;j<store_elements; ++j){
+        idx_no = std::to_string(j);
+        idx_no += ": ";
+        strcat(row, idx_no.c_str());
+        strcat(row, read_store->d_store.reservation_store[j].name);
+        strcat(row, "  ");
+        strcat(row, read_store->d_store.reservation_store[j].email);
+        strcat(row, "  ");
+        strcat(row, read_store->d_store.reservation_store[j].from);
+        strcat(row, "  ");
+        strcat(row, read_store->d_store.reservation_store[j].to);
+        strcat(row, "  ");
+        strcat(row, read_store->d_store.reservation_store[j].date_departure);
+        strcat(row, "  ");
+        strcat(row, read_store->d_store.reservation_store[j].no_of_people);
+        strcat(row, "  ");
+        strcat(row, read_store->d_store.reservation_store[j].ph_no);
+        DrawText(row, init_x, init_y + offset, 18 , BLACK);
+        strcpy(row, "");
+        offset += 30;
+    }
+
 }

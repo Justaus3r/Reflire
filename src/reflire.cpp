@@ -18,11 +18,12 @@ void ReFlire::startEventLoop(){
     CharterRequest charter_req_view; 
     MakingReservationOverlay makereservation_overlay_view;
     Ticket ticket_view;
-
+    
     login_view.registerController(login_view_controller);
+    dashboard_view.registerController(dashboard_showpastreservations_controller);
     charter_req_view.registerController(make_reservations_view_controller);     
     ticket_view.registerController(finished_booking_controller);
-
+    
 
     login_view.next_view = &dashboard_view;
     dashboard_view.next_view = &charter_req_view; 

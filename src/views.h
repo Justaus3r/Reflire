@@ -112,7 +112,7 @@ private:
     char num_people_text[128] = {0};
 
     
-    int makereservation_button_x = WINDOW_WIDTH / 2 - (MeasureText("Search", FONT_SIZE) + 20) / 2;
+    int makereservation_button_x = WINDOW_WIDTH / 2 - (MeasureText("Make Reservation", FONT_SIZE) + 20) / 2;
     int makereservation_button_y = phone_textbox_y + 90;
 
     bool name_textbox_active = true;

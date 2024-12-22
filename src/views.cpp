@@ -204,35 +204,36 @@ View* Dashboard::render() {
         
         DrawText("Frequently Asked Questions", WINDOW_WIDTH / 2 - MeasureText("Frequently Asked Questions", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
      
-        Rectangle contactInRect = { 50, 100, 900, 400 }; 
-        Rectangle backButtRect = { 400, 530, 100, 40 };
+        Rectangle InRect = { 20, 100, 760, 400 }; 
+        Rectangle backButtRect = { WINDOW_WIDTH / 2 - MeasureText("Back", FONT_SIZE), 530, 100, 40 };
 
-        DrawRectangleRec(contactInRect, WHITE);
-        DrawRectangleLinesEx(contactInRect, 5, DARKGRAY);
+        DrawRectangleRec(InRect, WHITE);
+        DrawRectangleLinesEx(InRect, 5, DARKGRAY);
 
         std::string query1("Do you offer one-way or round-trip charter options?");
-        std::string ans1("Yes, we provide both one-way and round-trip charter options tailored to your need"); 
-        std::string query2("What is your policy for cancellations, refunds, or rescheduling?");
-        std::string ans2("Cancellation and rescheduling policies vary based on the booking agreement, with potential fees applied. Refunds depend on the notice period and terms of the contract.");
+        std::string ans1("No, we only provide one-way charter option tailored to your need"); 
+        std::string query2("What is your policy for cancellations, refunds, or \nrescheduling?");
+        std::string ans2("Cancellation and rescheduling policies vary based on the booking agreement, with\npotential fees applied.Refunds depend on the notice period and terms of the contract.");
         std::string query3("Do you offer corporate packages for business travel?");
-        std::string ans3("Yes, we offer customizable corporate packages designed for business travel, including priority services and flexible scheduling."); 
+        std::string ans3("Yes, we offer customizable corporate packages designed for business travel,\n including priority services and flexible scheduling."); 
 
 
-        DrawText(("Q->" + query1).c_str(), contactInRect.x + 20, contactInRect.y + 20, 30, BLACK);
-        DrawText(("" + ans1).c_str(), contactInRect.x + 20, contactInRect.y + 60, 20, DARKGRAY);
+        DrawText(("Q->" + query1).c_str(), InRect.x + 20, InRect.y + 20, 22, BLACK);
+        DrawText(("" + ans1).c_str(), InRect.x + 20, InRect.y + 70, FONT_SIZE, DARKGRAY);
 
     
-        DrawText(("Q->" + query2).c_str(), contactInRect.x + 20, contactInRect.y + 130, 30, BLACK);
-        DrawText(("" + ans2).c_str(), contactInRect.x + 20, contactInRect.y + 180, 20, DARKGRAY);  
+        DrawText(("Q->" + query2).c_str(), InRect.x + 20, InRect.y + 130, 22, BLACK);
+        DrawText(("" + ans2).c_str(), InRect.x + 20, InRect.y + 180, FONT_SIZE, DARKGRAY);  
 
-        DrawText(("Q->" + query3).c_str(), contactInRect.x + 20, contactInRect.y + 230, 30, BLACK);
-        DrawText(("" + ans3).c_str(), contactInRect.x + 20, contactInRect.y + 275, 20, DARKGRAY);  
-
-
+        DrawText(("Q->" + query3).c_str(), InRect.x + 20, InRect.y + 230, 22, BLACK);
+        DrawText(("" + ans3).c_str(), InRect.x + 20, InRect.y + 275, FONT_SIZE, DARKGRAY);  
 
     
         if (GuiButton(backButtRect, "Back")) {
-
+            is_subview_active = false;
+            query_services_subview_active = false;
+            contactus_subview_active = false;
+            pastreservations_subview_active = false;
         }
 
 
@@ -240,12 +241,57 @@ View* Dashboard::render() {
 
     else if(contactus_subview_active){
 
-        DrawText("Contact Us", WINDOW_WIDTH / 2 - MeasureText("Dashboard", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
+        Rectangle InRect = { 20, 100, 760, 400 }; 
+        Rectangle backButtRect = { WINDOW_WIDTH / 2 - MeasureText("Back", FONT_SIZE), 530, 100, 40 };
+
+
+        DrawText("Contact Us", WINDOW_WIDTH / 2 - MeasureText("Contact Us", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
+
+   
+        DrawRectangleRec(InRect, LIGHTGRAY);
+        DrawRectangleLinesEx(InRect, 5, DARKGRAY);
+
+     
+
+        DrawText("Email: ifno@reflire.com", InRect.x + 20, InRect.y + 20, 25, BLACK);
+        DrawText("Phone: +1 (555) 123-4567", InRect.x + 20, InRect.y + 50, 25, BLACK);
+
+    
+        DrawText("Visit our Discussions page for more details:", InRect.x + 20, InRect.y + 150, 25, BLACK);
+        DrawText("https://github.com/Justaus3r/Reflire/discussions/", InRect.x + 20, InRect.y + 180, 20, BLUE);  
+
+   
+        if (GuiButton(backButtRect, "Back")) {
+            is_subview_active = false;
+            query_services_subview_active = false;
+            contactus_subview_active = false;
+            pastreservations_subview_active = false;
+        }
+
+
     }
 
     else if(pastreservations_subview_active){
         
-        DrawText("Reservations History", WINDOW_WIDTH / 2 - MeasureText("Dashboard", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
+        Rectangle InRect = { 20, 100, 760, 400 }; 
+        Rectangle backButtRect = { WINDOW_WIDTH / 2 - MeasureText("Back", FONT_SIZE), 530, 100, 40 };
+
+        DrawText("Reservations History", WINDOW_WIDTH / 2 - MeasureText("Reservations History", FONT_SIZE_HEAD) / 2, WINDOW_HEIGHT * 0.05, FONT_SIZE_HEAD, BLACK);
+   
+        DrawRectangleRec(InRect, LIGHTGRAY);
+        DrawRectangleLinesEx(InRect, 5, DARKGRAY);
+
+        ctx.x = InRect.x + 20;
+        ctx.y = InRect.y + 30;
+
+        this->executeController(ctx);  
+   
+        if (GuiButton(backButtRect, "Back")) {
+            is_subview_active = false;
+            query_services_subview_active = false;
+            contactus_subview_active = false;
+            pastreservations_subview_active = false;
+        }
     }
 
     return this;
@@ -299,19 +345,19 @@ View* CharterRequest::render() {
    
     DrawText("Name:", 42, name_textbox_y, FONT_SIZE, BLACK);
     DrawText("From:", 42, from_textbox_y, FONT_SIZE, BLACK);
-    DrawText("To:", 595, from_textbox_y, FONT_SIZE, BLACK);
+    DrawText("To:", 495, from_textbox_y, FONT_SIZE, BLACK);
     DrawText("Date:", 42, date_textbox_y, FONT_SIZE, BLACK);
     DrawText("Phone No:", name_textbox_x, phone_textbox_y - 20, FONT_SIZE, BLACK);
-    DrawText("Email:", 595, name_textbox_y, FONT_SIZE, BLACK);
-    DrawText("No. of People:", 500, date_textbox_y, FONT_SIZE, BLACK);
+    DrawText("Email:", 495, name_textbox_y, FONT_SIZE, BLACK);
+    DrawText("No. of People:", 495, date_textbox_y, FONT_SIZE, BLACK);
 
     bool name_butt_st = GuiTextBox((Rectangle){150, name_textbox_y, textbox_size, 20}, name_text, input_size, name_textbox_active);
     bool from_butt_st = GuiTextBox((Rectangle){150, from_textbox_y, textbox_size, 20}, from_text, input_size, from_textbox_active);
-    bool to_butt_st = GuiTextBox((Rectangle){700, from_textbox_y, textbox_size, 20}, to_text, input_size, to_textbox_active);
+    bool to_butt_st = GuiTextBox((Rectangle){550, from_textbox_y, textbox_size, 20}, to_text, input_size, to_textbox_active);
     bool date_butt_st = GuiTextBox((Rectangle){150, date_textbox_y, textbox_size, 20}, date_text, input_size, date_textbox_active);
     bool phone_butt_st = GuiTextBox((Rectangle){name_textbox_x, phone_textbox_y+20, textbox_size, 20}, phone_text, input_size, phone_textbox_active);
-    bool email_butt_st = GuiTextBox((Rectangle){700, name_textbox_y, textbox_size, 20}, email_text, input_size, email_textbox_active);
-    bool numpeople_butt_st = GuiTextBox((Rectangle){710, date_textbox_y, textbox_size, 20}, num_people_text, input_size, numpeople_textbox_active);
+    bool email_butt_st = GuiTextBox((Rectangle){550, name_textbox_y, textbox_size, 20}, email_text, input_size, email_textbox_active);
+    bool numpeople_butt_st = GuiTextBox((Rectangle){610, date_textbox_y, textbox_size * 0.60, 20}, num_people_text, input_size, numpeople_textbox_active);
 
     bool do_reservation_button_status = GuiButton((Rectangle){makereservation_button_x, makereservation_button_y, MeasureText("Make Reservation", FONT_SIZE) + 20, 30}, "Make Reservation");
      

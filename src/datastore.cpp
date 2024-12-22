@@ -1,4 +1,5 @@
 #include <cstdlib>
+#include <sstream>
 #include <cstring>
 #include "strings.h"
 #include "datastore.h"
@@ -75,25 +76,25 @@ void DataStore::writeToDataStore(Datastore dstore, DataStoreType ds_type){
             char reservations_record[1024] = "";
 
             strcat(reservations_record, dstore.reservation.name);
-            strcat(reservations_record, " , ");
+            strcat(reservations_record, ",");
 
             strcat(reservations_record, dstore.reservation.email);
-            strcat(reservations_record, " , ");
+            strcat(reservations_record, ",");
 
             strcat(reservations_record, dstore.reservation.from);
-            strcat(reservations_record, " , ");
+            strcat(reservations_record, ",");
 
 
             strcat(reservations_record, dstore.reservation.to);
-            strcat(reservations_record, " , ");
+            strcat(reservations_record, ",");
 
 
             strcat(reservations_record, dstore.reservation.date_departure);
-            strcat(reservations_record, " , ");
+            strcat(reservations_record, ",");
 
 
             strcat(reservations_record, dstore.reservation.no_of_people);
-            strcat(reservations_record, " , ");
+            strcat(reservations_record, ",");
 
             strcat(reservations_record, dstore.reservation.ph_no);
 
@@ -151,14 +152,39 @@ DataStore* DataStore::readDataStore(char datastore_name[100], DataStoreType ds_t
 
         
             std::string line;
+            std::string csv_delim;
             int counter = 0; 
+            
+            std::string name_s;
+            std::string email_s;
+            std::string from_s;
+            std::string to_s;
+            std::string date_departure_s;
+            std::string no_of_people_s;
+            std::string ph_no_s;
+            
 
-            while(std::getline(reser_file, line)){
-                if(! ( reser_file  >> dstore->d_store.reservation_store[counter].name >> dstore->d_store.reservation_store[counter].email >> dstore->d_store.reservation_store[counter].from >> dstore->d_store.reservation_store[counter].from >> dstore->d_store.reservation_store[counter].to >> dstore->d_store.reservation_store[counter].date_departure >> dstore->d_store.reservation_store[counter].no_of_people >> dstore->d_store.reservation_store[counter].ph_no )){
-                    break;
-                }
+            while (std::getline(reser_file, line)) {
+                std::istringstream iss(line); 
+                std::getline(iss, name_s, ',');
+                std::getline(iss, email_s, ',');
+                std::getline(iss, from_s, ',');
+                std::getline(iss, to_s, ',');
+                std::getline(iss, date_departure_s, ',');
+                std::getline(iss, no_of_people_s, ',');
+                std::getline(iss, ph_no_s, ',');
+            
+                strcpy(dstore->d_store.reservation_store[counter].name, name_s.c_str());
+                strcpy(dstore->d_store.reservation_store[counter].email, email_s.c_str());
+                strcpy(dstore->d_store.reservation_store[counter].from, from_s.c_str());
+                strcpy(dstore->d_store.reservation_store[counter].to, to_s.c_str());
+                strcpy(dstore->d_store.reservation_store[counter].date_departure, date_departure_s.c_str());
+                strcpy(dstore->d_store.reservation_store[counter].no_of_people, no_of_people_s.c_str());
+                strcpy(dstore->d_store.reservation_store[counter].ph_no, ph_no_s.c_str());
+
+                dstore->d_store.reservation_store[counter].is_occupied = true;
                 ++counter;
-            }    
+            }
             return dstore;
         }
 

@@ -3,6 +3,8 @@
 
 
 struct Context{
+    int x;
+    int y;
     char username[128];
     char password[128];
     char name[128];
@@ -28,5 +30,6 @@ void make_reservations_view_controller(Context& ctx);
 
 void finished_booking_controller(Context& ctx);
 
+void dashboard_showpastreservations_controller(Context& ctx);
 
 #endif

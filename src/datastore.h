@@ -24,6 +24,7 @@ struct Reservation{
     char date_departure[128];
     char no_of_people[128];
     char ph_no[128];
+    bool is_occupied = false;
 };
 
 
