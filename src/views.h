@@ -148,9 +148,11 @@ class MakingReservationOverlay: public View{
 
 
 class Ticket: public View{
-
+    private:
+      Image ticket_bg;
+      Texture2D ticket_texture;
     public:
-        Ticket(){};
+        Ticket();
         View* render();
         void registerController(void(*view_controller)(Context& ctx));
 };
