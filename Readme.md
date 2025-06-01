@@ -5,7 +5,7 @@ Airline flight reservation system(Semester project).
 # Build Instruction
 ## Linux
 
-**Note**: Do ensure that raylib is installed beforehand. Instructions are available [here](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux)
+**Note**: Do ensure that raylib and mysqlclient(C-API) is installed beforehand. Instructions are available [here](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux)
 
 **Note**: Also make sure that db user password is stored in `REFLIRE_DBPPASS` environment variable beforehand
 
