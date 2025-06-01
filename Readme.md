@@ -7,6 +7,8 @@ Airline flight reservation system(Semester project).
 
 **Note**: Do ensure that raylib is installed beforehand. Instructions are available [here](https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux)
 
+**Note**: Also make sure that db user password is stored in `REFLIRE_DBPPASS` environment variable beforehand
+
 ```
 $ git clone https://github.com/Justaus3r/Reflire.git
 $ cd src
@@ -31,6 +33,8 @@ $ make clean
 Enrollment#1: 147
 Enrollment#2: 128
 
+## Credits:
+- [mysql+++](https://github.com/daotrungkien/mysql-modern-cpp/)
 
 ## License
 Licensed under MIT license.
