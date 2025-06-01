@@ -8,6 +8,8 @@
 #endif
 
 #include <iostream>
+#include "../mysql+++/mysql+++.h"
+
 
 enum DataStoreType{
     CREDENTIALS,
@@ -41,7 +43,7 @@ class DataStore{
         char dstore_name[100];
         char creds_file[200] = "creds.creds";
         char reservation_file[200] = "reservations.csv";
-    public:
+    public: 
         Datastore d_store;
         DataStore(char datastore_name[100]);
         void createDataStore(Datastore dstore, DataStoreType ds_type);
