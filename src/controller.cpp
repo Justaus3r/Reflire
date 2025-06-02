@@ -104,7 +104,11 @@ void login_view_controller(Context& ctx){
 void make_reservations_view_controller(Context& ctx){
 
     DataStore dstore(ctx.username);
-    Datastore ds;
+    Datastore ds; 
+   
+
+    ds.user_name.assign(ctx.username);
+    dstore.d_store.user_name.assign(ctx.username);
 
     strcpy(ds.reservation.name, ctx.name);
     strcpy(ds.reservation.email, ctx.email);
@@ -113,7 +117,7 @@ void make_reservations_view_controller(Context& ctx){
     strcpy(ds.reservation.date_departure, ctx.date);
     strcpy(ds.reservation.no_of_people, ctx.num_people);
     strcpy(ds.reservation.ph_no, ctx.phone);
-
+    
     dstore.createDataStore(ds, RESERVATIONS);
 
     ctx.is_currentview_complete = true;

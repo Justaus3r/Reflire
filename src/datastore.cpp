@@ -26,7 +26,7 @@ void DataStore::createDataStore(Datastore ds, DataStoreType ds_type){
         }
     
         case RESERVATIONS: { 
-            auto res = db_conn.query("create table if not exists reservations(name varchar(40), email varchar(40), departure varchar(40), destination varchar(40), date varchar(40), noof_people int, phone_no varchar(20))");        
+            auto res = db_conn.query("create table if not exists reservations(username varchar(40), name varchar(40), email varchar(40), departure varchar(40), destination varchar(40), date varchar(40), noof_people int, phone_no varchar(20))");        
             
             writeToDataStore(ds, ds_type); 
             break; 
@@ -51,7 +51,7 @@ void DataStore::writeToDataStore(Datastore ds, DataStoreType ds_type){
             int no_of_people = atoi(ds.reservation.no_of_people);
             
             string phone_no  (ds.reservation.ph_no);
-            auto res = db_conn.query("insert into reservations values('%s', '%s', '%s', '%s', '%s', %d, '%s')", ds.reservation.name, ds.reservation.email, ds.reservation.from, ds.reservation.to, ds.reservation.date_departure, no_of_people, ds.reservation.ph_no);
+            auto res = db_conn.query("insert into reservations values('%s', '%s', '%s', '%s', '%s', '%s', %d, '%s')", ds.user_name.c_str(), ds.reservation.name, ds.reservation.email, ds.reservation.from, ds.reservation.to, ds.reservation.date_departure, no_of_people, ds.reservation.ph_no);
             break;        
         }
 
@@ -78,17 +78,17 @@ DataStore* DataStore::readDataStore(char datastore_name[100], DataStoreType ds_t
             }
 
         case RESERVATIONS:{
-                string name, email, from, to, date_departure, phone_no;
+                string loggedin_username, name, email, from, to, date_departure, phone_no;
                 int no_of_people;
 
-                auto res = db_conn.query("select * from reservations");
+                auto res = db_conn.query("select * from reservations where username='%s'", user.c_str());
                 if(res.is_empty()){
                     cout<<"WARNING: NO RESERVATIONS FOUND!";
                     break;
                 }
                 int counter = 0;
                 while(!res.eof()){
-                    res.fetch(name, email, from, to, date_departure, no_of_people, phone_no);
+                    res.fetch(loggedin_username, name, email, from, to, date_departure, no_of_people, phone_no);
                     char no_of_people_carr[128];
                     sprintf(no_of_people_carr, "%d", no_of_people);
                     strcpy(dstore->d_store.reservation_store[counter].name, name.c_str());  
